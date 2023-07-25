@@ -5,6 +5,7 @@ import { routerUser } from './user.router.js';
 import { routerCostumer } from './costomer.router.js';
 import { routerCategory } from './category.router.js';
 import { routerOrder } from './order.router.js';
+import { routerAuth } from './auth.router.js';
 
 
 export const routerApi = (app) => {
@@ -16,6 +17,7 @@ export const routerApi = (app) => {
   router.use('/costomer', routerCostumer)
   router.use('/category', routerCategory)
   router.use('/Order', routerOrder)
+  router.use('/auth', routerAuth)
 }
 
 

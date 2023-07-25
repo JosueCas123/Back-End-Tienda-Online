@@ -1,6 +1,6 @@
 import { Boom } from "@hapi/boom";
 import sequelize from "../libs/sequelize.js";
-
+import bcrypt from 'bcrypt';
 
 export class CustomerService {
 
@@ -23,10 +23,17 @@ export class CustomerService {
 
   async create(data) {
     // lo que has este codigo es al momento de crear el cliente tambien le pasamos el usuario
-    const newUser = await sequelize.models.User.create(data.user)
-    const newCustomer = await sequelize.models.Customer.create({
+    const hash = await bcrypt.hash(data.user.password, 10);
+    const newData = {
       ...data,
-      userId: newUser.id,
+      user:{
+        ...data.user,
+        password:hash
+      }
+    }
+    //const newUser = await sequelize.models.User.create(data.user)
+    const newCustomer = await sequelize.models.Customer.create(newData,{
+      include:['user']
     });
     return newCustomer;
   }
